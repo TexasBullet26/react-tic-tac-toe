@@ -23,8 +23,27 @@ class Square extends React.Component {
 }
 
 class Board extends React.Component {
+    /* 
+        Add constructor to the Board and set the Board's 
+        initial state to contain an array with 9 nulls. 
+        These 9 nulls correspond to the 9 squares.
+    */
+    constructor(props) {
+        super(props);
+        this.state = {
+            squares: Array(9).fill(null),
+        };
+    }
+    
+    /*
+        Using the prop passing mechanism again. We modify 
+        the Board to instruct each individual Square about 
+        its current value ('X', 'O', or null). We defined the 
+        squares array in the Board's constructor, and we will 
+        modify the Board's renderSquare method to read from it.
+    */
     renderSquare(i) {
-        return <Square value={i} />;    // passes a `value` prop to `Square` component
+        return <Square value={this.state.squares[i]} />;
     }
 
     render() {
