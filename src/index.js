@@ -29,6 +29,12 @@ class Board extends React.Component {
         super(props);
         this.state = {
             squares: Array(9).fill(null),
+            /*
+                Each time a player moves, xIsNext will be flipped
+                to determine which player goes next and the game's
+                state will be saved.
+            */
+            xIsNext: true,
         };
     }
     
@@ -45,8 +51,16 @@ class Board extends React.Component {
     */
     handleClick(i) {
         const squares = this.state.squares.slice();
-        squares[i] = 'X';
-        this.setState({squares: squares});
+        /*
+            Updated the Board's handleClick function to flip the
+            value of xIsNext. With this change, "X"s and "O"s can
+            take turns.
+        */
+        squares[i] = this.state.xIsNext ? 'X' : 'O';
+        this.setState({
+            squares: squares,
+            xIsNext: !this.state.xIsNext,
+        });
     }
 
     /*
@@ -75,7 +89,11 @@ class Board extends React.Component {
     }
 
     render() {
-        const status = 'Next player: X';
+        /*
+            Changed the "status" text in the Board's render so that it
+            displays which player has the next turn.
+        */
+        const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
 
         return (
             <div>
