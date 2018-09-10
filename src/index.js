@@ -2,36 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-class Square extends React.Component {
-    /*
-        When a Square is clicked, the onClick function
-        provided by the Board is called. This is how this
-        is achieved:
-          1. The onClick prop on the built-in DOM <button>
-             component tells React to set up a click event
-             listener.
-          2. When the button is clicked, React will call the
-             onClick event handle that is defined in Square's
-             render() method.
-          3. This event handler calls this.props.onClick().
-             The Square's onClick prop was specified by the
-             Board.
-          4. Since the Board passed onClick={() => this.handleClick(i)}
-             to Square, the Square calls this.handleClick(i) when clicked.
-          5. We have not defined the handleClick() method yet, so our
-             code crashes. 
-    */
-    render() {
-        return (
-            <button 
-                className="square" 
-                onClick={() => this.props.onClick()}
-            >
-                {this.props.value}
-            </button>
-        );
-    }
+/*
+    Changed the Square class to be a functional component.
+    In React, functional components are a simpler way to
+    write components that only contain a `render` method
+    and don't have their own state. Functional components
+    are less tedious to write than classes, and many components
+    can be expressed this way.
+*/
+function Square(props) {
+    return (
+        <button className="square" onClick={props.onClick}>
+            {props.value}
+        </button>
+    );
 }
+
 
 class Board extends React.Component {
     /* 
