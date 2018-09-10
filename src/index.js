@@ -43,7 +43,21 @@ class Board extends React.Component {
         modify the Board's renderSquare method to read from it.
     */
     renderSquare(i) {
-        return <Square value={this.state.squares[i]} />;
+        /*
+            To maintain the Board's state's privacy, we'll pass
+            down a function from the Board to the Square. This
+            function will get called when a Square is clicked.
+            Now we're passing down two props from Board to Square:
+            value and onClick. The onClick prop is a function that
+            Square can call when clicked. 
+        */
+        return ( 
+            <Square 
+                value={this.state.squares[i]} 
+                onClick={() => this.handleClick(i)}
+            />
+        
+        );
     }
 
     render() {
