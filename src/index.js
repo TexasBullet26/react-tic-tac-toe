@@ -47,6 +47,23 @@ class Board extends React.Component {
     }
     
     /*
+        Now the state is stored in the Board component instead
+        of the individual Square components. When the Board
+        state changes, the Square components re-render automatically.
+        Keeping the state of all squares in the Board component
+        will allow it to determine the winner in the future.
+        The Square components are now controlled components. The
+        Board has full control over them. We call .slice() to create
+        a copy of the squares array to modify instea of modifying the
+        existing array.
+    */
+    handleClick(i) {
+        const squares = this.state.squares.slice();
+        squares[i] = 'X';
+        this.setState({squares: squares});
+    }
+
+    /*
         Using the prop passing mechanism again. We modify 
         the Board to instruct each individual Square about 
         its current value ('X', 'O', or null). We defined the 
