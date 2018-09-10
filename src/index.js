@@ -3,20 +3,31 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 class Square extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: null,
-        };
-    }
-
+    /*
+        When a Square is clicked, the onClick function
+        provided by the Board is called. This is how this
+        is achieved:
+          1. The onClick prop on the built-in DOM <button>
+             component tells React to set up a click event
+             listener.
+          2. When the button is clicked, React will call the
+             onClick event handle that is defined in Square's
+             render() method.
+          3. This event handler calls this.props.onClick().
+             The Square's onClick prop was specified by the
+             Board.
+          4. Since the Board passed onClick={() => this.handleClick(i)}
+             to Square, the Square calls this.handleClick(i) when clicked.
+          5. We have not defined the handleClick() method yet, so our
+             code crashes. 
+    */
     render() {
         return (
             <button 
                 className="square" 
-                onClick={() => this.setState({value: 'X'})}
+                onClick={() => this.props.onClick()}
             >
-                {this.state.value}
+                {this.props.value}
             </button>
         );
     }
