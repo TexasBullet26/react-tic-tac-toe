@@ -52,6 +52,13 @@ class Board extends React.Component {
     handleClick(i) {
         const squares = this.state.squares.slice();
         /*
+            Returns early by ignoring a click if someone has won
+            the game or if a Square is already filled.
+        */
+        if (calculateWinner(squares) || squares[i]) {
+            return;
+        }
+        /*
             Updated the Board's handleClick function to flip the
             value of xIsNext. With this change, "X"s and "O"s can
             take turns.
@@ -90,10 +97,18 @@ class Board extends React.Component {
 
     render() {
         /*
-            Changed the "status" text in the Board's render so that it
-            displays which player has the next turn.
+            Replaces the status declaration. This will call
+            calculateWinner(squares) function to check if
+            a player has won. If a player has won, we can
+            display text such as "Winner: X" or "Winner: O".
         */
-        const status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        const winner = calculateWinner(this.state.squares);
+        let status;
+        if (winner) {
+            status = 'Winner: ' + winner;
+        }   else {
+            status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
+        }
 
         return (
             <div>
@@ -140,3 +155,28 @@ ReactDOM.render(
     <Game />,
     document.getElementById('root')
 );
+
+/*
+    Helper function that determines a winner. This function
+    will be called in the Board's render function to check
+    if a player has won.
+*/
+function calculateWinner(squares) {
+    const lines = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+    ];
+    for (let i = 0; i < lines.length; i++) {
+        const [a, b, c] = lines[i];
+        if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+            return squares[a];
+        }
+    }
+    return null;
+}
